@@ -1,9 +1,10 @@
-import {Component, signal} from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
 import {ProductCard} from '../product-card/product-card';
 import {Product} from '../product';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import {map} from 'rxjs';
 
 @Component({
   selector: 'app-products-grid',
@@ -38,7 +39,17 @@ export class ProductsGrid {
     { id: 20, name: "Cable Management Box", description: "Hide power strips and cables, anti-slip rubber feet", price: 19.99, originalPrice: 29.99 }
   ])
 
-  protected  clearSearch() {
+  protected readonly filteredProducts = computed(() => {
+    const term = this.searchTerm().toLocaleLowerCase().trim();
+    if (!term) return this.products();
+
+    return this.products().filter((product) =>
+      product.name.toLowerCase().includes(term) ||
+      product.description.toLowerCase().includes(term)
+    );
+  });
+
+  protected clearSearch() {
     this.searchTerm.set('');
   }
 
