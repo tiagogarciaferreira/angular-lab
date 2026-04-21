@@ -49,11 +49,15 @@ export class ProductsGrid {
     );
   });
 
-  protected clearSearch() {
+  protected onAddToCart(product: Product){
+    console.log(product)
+  }
+
+/*  protected clearSearch() {
     this.searchTerm.set('');
   }
 
   protected trimSearch() {
     this.searchTerm.update((value) => value.trim());
-  }
+  }*/
 }
