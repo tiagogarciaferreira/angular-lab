@@ -4,7 +4,8 @@ import {Product} from '../product';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
-import {map} from 'rxjs';
+import {CartService} from '../../cart/cart-service';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-products-grid',
@@ -13,6 +14,8 @@ import {map} from 'rxjs';
   styleUrl: './products-grid.scss',
 })
 export class ProductsGrid {
+
+  private readonly cartService = inject(CartService);
 
   protected readonly searchTerm = signal('');
 
@@ -50,7 +53,7 @@ export class ProductsGrid {
   });
 
   protected onAddToCart(product: Product){
-    console.log(product)
+    this.cartService.addToCart(product);
   }
 
 /*  protected clearSearch() {
